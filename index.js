@@ -1,16 +1,25 @@
 const { Deta, App } = require('deta');
 const express = require('express');
+const marked = require('marked')
+var favicon = require('serve-favicon');
 
 const deta = Deta();
 
 const app = App(express());
 const db = deta.Base('alphapoint')
-
-app.get('/', async(req, res) => {
-    res.send("Aidan's submission for the Alphapoint coding challenge. https://github.com/AidanG1/alphapoint");
+app.use(favicon(__dirname + '/images/boredape.png'));
+app.get('/', async (req, res) => {
+    var path = __dirname + '/readme.md';
+    fs.readFile(path, 'utf8', function (err, data) {
+        if (err) {
+            console.log(err);
+        }
+        res.send(marked(data.toString()));
+    });
+    // res.send("Aidan's submission for the Alphapoint coding challenge. https://github.com/AidanG1/alphapoint");
 });
 
-app.get('/gas', async(req, res) => {
+app.get('/gas', async (req, res) => {
     fetch('https://ethgasstation.info/api/ethgasAPI.json').then(
         (response) => response.json().then(r => {
             res.json({ error: false, message: { fast: r.fastest, average: r.fast, low: r.safeLow } });
@@ -22,14 +31,14 @@ app.get('/gas', async(req, res) => {
     })
 });
 
-app.get('/average', async(req, res) => {
+app.get('/average', async (req, res) => {
     const fromTime = req.query.fromTime
     if (fromTime === undefined) {
-        res.json({ error: true, message:"must include fromTime query parameter" })
+        res.json({ error: true, message: "must include fromTime query parameter" })
     }
     const toTime = req.query.toTime
     if (toTime === undefined) {
-        res.json({ error: true, message:"must include toTime query parameter" })
+        res.json({ error: true, message: "must include toTime query parameter" })
     }
     let values = await db.fetch([
         { "time?lt": toTime },

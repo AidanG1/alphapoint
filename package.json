@@ -11,6 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "deta": "^1.0.2",
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "marked": "^4.0.12",
+    "serve-favicon": "^2.5.0"
   }
 }
