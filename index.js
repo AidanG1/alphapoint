@@ -47,12 +47,11 @@ app.get('/average', async (req, res) => {
     if (toTime < fromTime) {
         [toTime, fromTime] = [fromTime, toTime]
     }
-    // let { items: values } = await db.fetch([
-    //     { "time?gt": fromTime },
-    //     { "time?lt": toTime }
-    // ])
-    // let { items: values } = await db.fetch()
-    let values = []
+    const query = [
+        { "time?gt": fromTime },
+        { "time?lt": toTime }
+    ]
+    let { items: values } = await db.fetch(query)
     let sum = 0
     for (let value of values) {
         sum += value.gas
