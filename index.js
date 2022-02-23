@@ -32,15 +32,18 @@ app.get('/gas', async (req, res) => {
 });
 
 app.get('/average', async (req, res) => {
+    // ?fromTime=1645197122835&toTime=1645559641836
     const fromTime = req.query.fromTime
     if (fromTime === undefined) {
         res.json({ error: true, message: "must include fromTime query parameter" })
     }
     const toTime = req.query.toTime
+    console.log(toTime)
     if (toTime === undefined) {
         res.json({ error: true, message: "must include toTime query parameter" })
     }
-    let values = await db.fetch([
+    // res.json({'hi':'hi', fromTime: fromTime, toTime, toTime})
+    let { values } = await db.fetch([
         { "time?lt": toTime },
         { "time?gt": fromTime }
     ])
