@@ -36,17 +36,23 @@ app.get('/average', async (req, res) => {
     const fromTime = req.query.fromTime
     if (fromTime === undefined) {
         res.json({ error: true, message: "must include fromTime query parameter" })
+        return 'must include fromTime query parameter'
     }
     const toTime = req.query.toTime
     console.log(toTime)
     if (toTime === undefined) {
         res.json({ error: true, message: "must include toTime query parameter" })
+        return 'must include toTime query parameter'
     }
-    // res.json({'hi':'hi', fromTime: fromTime, toTime, toTime})
-    let { values } = await db.fetch([
-        { "time?lt": toTime },
-        { "time?gt": fromTime }
-    ])
+    if (toTime < fromTime) {
+        [toTime, fromTime] = [fromTime, toTime]
+    }
+    // let { items: values } = await db.fetch([
+    //     { "time?gt": fromTime },
+    //     { "time?lt": toTime }
+    // ])
+    // let { items: values } = await db.fetch()
+    let values = []
     let sum = 0
     for (let value of values) {
         sum += value.gas
@@ -56,6 +62,7 @@ app.get('/average', async (req, res) => {
     } else {
         res.json({ error: false, message: { "averageGasPrice": sum / values.length, "fromTime": fromTime, "toTime": toTime } })
     }
+    return values
 });
 
 app.lib.cron(event => { // run deta cron set "1 minute" ##### or whatever length you want
