@@ -9,14 +9,14 @@ const app = App(express());
 const db = deta.Base('alphapoint')
 app.use(favicon(__dirname + '/images/boredape.png'));
 app.get('/', async (req, res) => {
-    var path = __dirname + '/readme.md';
-    fs.readFile(path, 'utf8', function (err, data) {
-        if (err) {
-            console.log(err);
-        }
-        res.send(marked(data.toString()));
-    });
-    // res.send("Aidan's submission for the Alphapoint coding challenge. https://github.com/AidanG1/alphapoint");
+    // var path = __dirname + '/readme.md';
+    // fs.readFile(path, 'utf8', function (err, data) {
+    //     if (err) {
+    //         console.log(err);
+    //     }
+    //     res.send(marked(data.toString()));
+    // });
+    res.send("Aidan's submission for the Alphapoint coding challenge. https://github.com/AidanG1/alphapoint");
 });
 
 app.get('/gas', async (req, res) => {

@@ -14,6 +14,7 @@ Nonchalant Simian Watercraft Association is my solution to the Alphapoint coding
 	
 ## 🔮Decisions:<a name="decisions"></a>
 I created a REST API because it felt more practical. Although ethereum gas fees are constantly changing, accessing them at a specific point in time is still useful. Additionally, the main added functionality is to access gas averages over time which would not benefit from websockets.
+I decided to host with Deta and use Deta Base because it is very convenient. It was easy for me to set up and get working and provides a very simple way for people to host the project with no code required.
 		
 ## 🤖Techstack:<a name="tech"></a>
 	- Node.js
@@ -21,28 +22,3 @@ I created a REST API because it felt more practical. Although ethereum gas fees 
 	- Express
     - Deta Micros
     - Deta Base
-
-## 🖥️Instructions on how to host locally<a name="host"></a>
-
-First, clone the repository.
-```bash
-$ git clone git@github.com/AidanG1/snackRice.git
-$ cd snackRice
-```
-Then set up your virtual environment and install the requirements.
-```bash
-$ pip install -r requirements.txt
-```
-Next apply database migrations
-```bash
-$ python manage.py migrate
-```
-Finally, run the website on localhost. Visit localhost:8000 in your browser!
-```bash
-$ python manage.py runserver
-```
-To receive notification messages, create environment variables account_sid, auth_token, and msg_service_sid with your Twilio credentials and GOOGLE_KEY with your Google Maps API key.
-Then open up the flask server.
-```bash
-$ python notification.py
-```
