@@ -7,7 +7,7 @@ const app = App(express());
 const db = deta.Base('alphapoint')
 
 app.get('/', async(req, res) => {
-    res.send("Aidan's submission for the Alphapoint coding challenge.");
+    res.send("Aidan's submission for the Alphapoint coding challenge. https://github.com/AidanG1/alphapoint");
 });
 
 app.get('/gas', async(req, res) => {
@@ -24,7 +24,13 @@ app.get('/gas', async(req, res) => {
 
 app.get('/average', async(req, res) => {
     const fromTime = req.query.fromTime
+    if (fromTime === undefined) {
+        res.json({ error: true, message:"must include fromTime query parameter" })
+    }
     const toTime = req.query.toTime
+    if (toTime === undefined) {
+        res.json({ error: true, message:"must include toTime query parameter" })
+    }
     let values = await db.fetch([
         { "time?lt": toTime },
         { "time?gt": fromTime }
