@@ -1,21 +1,15 @@
-const { Deta, App } = require('deta');
 const express = require('express');
-const marked = require('marked')
+const { Deta, App } = require('deta');
+// const marked = require('marked')
 var favicon = require('serve-favicon');
 
 const deta = Deta();
 
-const app = App(express());
+const app = App(express()); 
 const db = deta.Base('alphapoint')
 app.use(favicon(__dirname + '/images/boredape.png'));
+
 app.get('/', async (req, res) => {
-    // var path = __dirname + '/readme.md';
-    // fs.readFile(path, 'utf8', function (err, data) {
-    //     if (err) {
-    //         console.log(err);
-    //     }
-    //     res.send(marked(data.toString()));
-    // });
     res.send("Aidan's submission for the Alphapoint coding challenge. https://github.com/AidanG1/alphapoint");
 });
 
@@ -47,10 +41,7 @@ app.get('/average', async (req, res) => {
     if (toTime < fromTime) {
         [toTime, fromTime] = [fromTime, toTime]
     }
-    const query = [
-        { "time?gt": fromTime },
-        { "time?lt": toTime }
-    ]
+    const query = { "time?gt": fromTime, "time?lt": toTime }
     let { items: values } = await db.fetch(query)
     let sum = 0
     for (let value of values) {
